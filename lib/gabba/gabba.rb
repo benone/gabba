@@ -74,9 +74,10 @@ module Gabba
     #   g.identify_user(cookies[:__utma], cookies[:__utmz])
     #   g.page_view("something", "track/me")
     #
-    def identify_user(utma, utmz=nil)
+    def identify_user(utma, utmz=nil, utmx=nil)
       @utma = utma
       @utmz = utmz
+      @utmx = utmx
       self
     end
 
@@ -112,7 +113,8 @@ module Gabba
     def cookie_params(utma1 = random_id, utma2 = rand(1147483647) + 1000000000, today = Time.now)
       @utma ||= "1.#{utma1}00145214523.#{utma2}.#{today.to_i}.#{today.to_i}.15"
       @utmz ||= "1.#{today.to_i}.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"
-      "__utma=#{@utma};+__utmz=#{@utmz};"
+      @utmx ||= ""
+      "__utma=#{@utma};+__utmz=#{@utmz};+__utmx=#{@utmx};"
     end
 
     # sanity check that we have needed params to even call GA
