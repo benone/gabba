@@ -113,8 +113,9 @@ module Gabba
     def cookie_params(utma1 = random_id, utma2 = rand(1147483647) + 1000000000, today = Time.now)
       @utma ||= "1.#{utma1}00145214523.#{utma2}.#{today.to_i}.#{today.to_i}.15"
       @utmz ||= "1.#{today.to_i}.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"
-      @utmx ||= ""
-      "__utma=#{@utma};+__utmz=#{@utmz};+__utmx=#{@utmx};"
+      params = "__utma=#{@utma};+__utmz=#{@utmz};"
+      params += "+__utmx=#{@utmx};" if @utmx.present?
+      params
     end
 
     # sanity check that we have needed params to even call GA
